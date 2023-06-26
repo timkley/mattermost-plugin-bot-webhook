@@ -1,0 +1,37 @@
+{
+  "id": "bot-webhook-plugin",
+  "name": "Bot Webhook",
+  "description": "This plugin allows you to send a webhook when a bot receives a message.",
+  "icon_path": "assets/starter-template-icon.svg",
+  "version": "0.1.0",
+  "min_server_version": "6.2.1",
+  "server": {
+    "executables": {
+      "linux-amd64": "server/dist/plugin-linux-amd64",
+      "linux-arm64": "server/dist/plugin-linux-arm64",
+      "darwin-amd64": "server/dist/plugin-darwin-amd64",
+      "darwin-arm64": "server/dist/plugin-darwin-arm64",
+      "windows-amd64": "server/dist/plugin-windows-amd64.exe"
+    }
+  },
+  "settings_schema": {
+    "settings": [
+      {
+        "key": "BotUserID",
+        "display_name": "Bot User ID",
+        "type": "text",
+        "help_text": "The user ID of the bot to listen for messages.",
+        "placeholder": "Enter the bot user ID",
+        "default": ""
+      },
+      {
+        "key": "WebhookURL",
+        "display_name": "Webhook URL",
+        "type": "text",
+        "help_text": "The URL to send the HTTP request to when the bot receives a message.",
+        "placeholder": "Enter the webhook URL",
+        "default": ""
+      }
+    ]
+  }
+}
