@@ -38,14 +38,12 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.P
 		p.API.LogError("Failed to get channel", "error", err.Error())
 		return
 	}
-
+	
 	if post.UserId == p.configuration.BotUserID {
 		return
 	}
 	
 	if strings.Contains(channel.Name, p.configuration.BotUserID) {
-		p.API.LogDebug("Message posted in bot channel", "channel", channel.Name)
-		
 		jsonPayload, err := json.Marshal(post)
 		if err != nil {
 			p.API.LogError("Failed to marshal JSON payload", "error", err.Error())
@@ -66,10 +64,8 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.P
 			return
 		}
 		defer resp.Body.Close()
-
+		
 		return
-	} else {
-		p.API.LogDebug("Message posted in non-bot channel", "channel", channel.Name)
 	}
 }
 
