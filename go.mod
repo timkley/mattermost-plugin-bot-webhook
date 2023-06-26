@@ -1,4 +1,4 @@
-module github.com/mattermost/mattermost-plugin-starter-template
+module github.com/timkley/mattermost-plugin-bot-webhook
 
 go 1.16
 
