@@ -66,15 +66,17 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.P
 			return
 		}
 		defer resp.Body.Close()
-		} else {
-			p.API.LogDebug("Message posted in non-bot channel", "channel", channel.Name)
-		}
+
+		return
+	} else {
+		p.API.LogDebug("Message posted in non-bot channel", "channel", channel.Name)
 	}
-	
-	func (p *BotWebhookPlugin) OnActivate() error {
-		return p.OnConfigurationChange()
-	}
-	
-	func main() {
-		plugin.ClientMain(&BotWebhookPlugin{})
-	}
+}
+
+func (p *BotWebhookPlugin) OnActivate() error {
+	return p.OnConfigurationChange()
+}
+
+func main() {
+	plugin.ClientMain(&BotWebhookPlugin{})
+}
