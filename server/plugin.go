@@ -13,6 +13,7 @@ import (
 type Configuration struct {
 	BotUserID  string
 	WebhookURL string
+	BearerToken string
 }
 
 // Plugin implements the interface expected by the Mattermost server to communicate between the server and plugin processes.
@@ -51,6 +52,7 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.P
 		}
 		
 		req, err := http.NewRequest("POST", p.configuration.WebhookURL, bytes.NewBuffer(jsonPayload))
+		req.Header.Set("Authorization", "Bearer " + p.configuration.BearerToken)
 		if err != nil {
 			p.API.LogError("Failed to create HTTP request", "error", err.Error())
 			return

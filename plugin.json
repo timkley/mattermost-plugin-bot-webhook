@@ -31,6 +31,14 @@
         "help_text": "The URL to send the HTTP request to when the bot receives a message.",
         "placeholder": "Enter the webhook URL",
         "default": ""
+      },
+      {
+        "key": "BearerToken",
+        "display_name": "Bearer Token",
+        "type": "text",
+        "help_text": "The bearer token to use for the HTTP request.",
+        "placeholder": "Enter the Bearer token",
+        "default": ""
       }
     ]
   }
