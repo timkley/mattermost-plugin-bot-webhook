@@ -11,8 +11,8 @@ import (
 )
 
 type Configuration struct {
-	BotUserID  string
-	WebhookURL string
+	BotUserID   string
+	WebhookURL  string
 	BearerToken string
 }
 
@@ -32,33 +32,33 @@ func (p *BotWebhookPlugin) OnConfigurationChange() error {
 }
 
 // ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.
-func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.Post) {
+func (p *BotWebhookPlugin) MessageHasBeenPosted(post *model.Post) {
 	channel, err := p.API.GetChannel(post.ChannelId)
-	
+
 	if err != nil {
 		p.API.LogError("Failed to get channel", "error", err.Error())
 		return
 	}
-	
+
 	if post.UserId == p.configuration.BotUserID {
 		return
 	}
-	
+
 	if strings.Contains(channel.Name, p.configuration.BotUserID) {
 		jsonPayload, err := json.Marshal(post)
 		if err != nil {
 			p.API.LogError("Failed to marshal JSON payload", "error", err.Error())
 			return
 		}
-		
+
 		req, err := http.NewRequest("POST", p.configuration.WebhookURL, bytes.NewBuffer(jsonPayload))
-		req.Header.Set("Authorization", "Bearer " + p.configuration.BearerToken)
+		req.Header.Set("Authorization", "Bearer "+p.configuration.BearerToken)
 		if err != nil {
 			p.API.LogError("Failed to create HTTP request", "error", err.Error())
 			return
 		}
 		req.Header.Set("Content-Type", "application/json")
-		
+
 		client := &http.Client{}
 		resp, err := client.Do(req)
 		if err != nil {
@@ -66,7 +66,7 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.P
 			return
 		}
 		defer resp.Body.Close()
-		
+
 		return
 	}
 }
