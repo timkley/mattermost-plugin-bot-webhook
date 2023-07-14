@@ -25,14 +25,16 @@ type BotWebhookPlugin struct {
 func (p *BotWebhookPlugin) OnConfigurationChange() error {
 	var configuration Configuration
 	if err := p.API.LoadPluginConfiguration(&configuration); err != nil {
+		p.API.LogError("Failed to load configuration", "error", err.Error())
 		return err
 	}
 	p.configuration = &configuration
 	return nil
 }
 
-// ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.
-func (p *BotWebhookPlugin) MessageHasBeenPosted(post *model.Post) {
+func (p *BotWebhookPlugin) MessageHasBeenPosted(c *plugin.Context, post *model.Post) {
+	p.API.LogDebug("MessageHasBeenPosted")
+
 	channel, err := p.API.GetChannel(post.ChannelId)
 
 	if err != nil {
@@ -45,6 +47,8 @@ func (p *BotWebhookPlugin) MessageHasBeenPosted(post *model.Post) {
 	}
 
 	if strings.Contains(channel.Name, p.configuration.BotUserID) {
+		p.API.LogDebug("Message to bot detected", "channel", channel.Name, "user", post.UserId, "message", post.Message)
+
 		jsonPayload, err := json.Marshal(post)
 		if err != nil {
 			p.API.LogError("Failed to marshal JSON payload", "error", err.Error())
