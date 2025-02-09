@@ -3,7 +3,7 @@
   "name": "Bot Webhook",
   "description": "This plugin allows you to send a webhook when a bot receives a message.",
   "icon_path": "assets/starter-template-icon.svg",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "min_server_version": "6.2.1",
   "server": {
     "executables": {
@@ -14,28 +14,28 @@
       "windows-amd64": "server/dist/plugin-windows-amd64.exe"
     }
   },
-  "settings_schema": {
+    "settings_schema": {
     "settings": [
       {
         "key": "BotUserID",
-        "display_name": "Bot User ID",
-        "type": "text",
-        "help_text": "The user ID of the bot to listen for messages.",
-        "placeholder": "Enter the bot user ID",
+        "display_name": "Bot User IDs",
+        "type": "longtext",
+        "help_text": "The user ID of the bot to listen for messages. One on each line",
+        "placeholder": "Enter the bot user ID on each line",
         "default": ""
       },
       {
         "key": "WebhookURL",
-        "display_name": "Webhook URL",
-        "type": "text",
-        "help_text": "The URL to send the HTTP request to when the bot receives a message.",
-        "placeholder": "Enter the webhook URL",
+        "display_name": "Webhook URLs",
+        "type": "longtext",
+        "help_text": "The URL to send the HTTP request to when the bot receives a message. One on each line",
+        "placeholder": "Enter the webhook URL on each line",
         "default": ""
       },
       {
         "key": "BearerToken",
         "display_name": "Bearer Token",
-        "type": "text",
+        "type": "longtext",
         "help_text": "The bearer token to use for the HTTP request.",
         "placeholder": "Enter the Bearer token",
         "default": ""
