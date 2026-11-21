@@ -98,7 +98,9 @@ func tempGitRepo(assert *assert.Assertions) (string, *git.Repository, func()) {
 		Email: "test@example.com",
 		When:  time.Now(),
 	}
-	_, err = w.Commit("initial commit", &git.CommitOptions{Author: sig})
+	// go-git 5.5.1 rejects empty commits unless this is set. The file above is
+	// unstaged, so this commit is empty, matching go-git 5.4 behavior.
+	_, err = w.Commit("initial commit", &git.CommitOptions{Author: sig, AllowEmptyCommits: true})
 	assert.Nil(err)
 	pathA := "a.txt"
 	err = ioutil.WriteFile(filepath.Join(wd, pathA),
